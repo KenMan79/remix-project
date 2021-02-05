@@ -31,10 +31,10 @@ module.exports = {
 
   'Test Github Import - from master branch': function (browser: NightwatchBrowser) {
     browser
-      .setSolidityCompilerVersion('soljson-v0.6.2+commit.bacdbe57.js') // open-zeppelin moved to pragma ^0.6.0 (master branch)
+      .setSolidityCompilerVersion('soljson-v0.8.0+commit.c7dfd78e.js') // open-zeppelin moved to pragma ^0.8.0 (master branch)
       .addFile('Untitled4.sol', sources[3]['browser/Untitled4.sol'])
       .clickLaunchIcon('fileExplorers')
-      .verifyContracts(['test7', 'ERC20', 'SafeMath'], {wait: 10000})
+      .verifyContracts(['test7', 'ERC20'], {wait: 10000})
   },
 
   'Test Github Import - from other branch': function (browser: NightwatchBrowser) {
@@ -47,12 +47,12 @@ module.exports = {
 
   'Test Github Import - no branch specified': function (browser: NightwatchBrowser) {
     browser
-          .setSolidityCompilerVersion('soljson-v0.6.2+commit.bacdbe57.js') // open-zeppelin moved to pragma ^0.6.0 (master branch)
+          .setSolidityCompilerVersion('soljson-v0.8.0+commit.c7dfd78e.js') // open-zeppelin moved to pragma ^0.8.0 (master branch)
           .clickLaunchIcon('fileExplorers')
           .click('li[data-id="treeViewLitreeViewItembrowser/README.txt"')
           .addFile('Untitled6.sol', sources[5]['browser/Untitled6.sol'])
           .clickLaunchIcon('fileExplorers')
-          .verifyContracts(['test10', 'ERC20', 'SafeMath'], {wait: 10000})
+          .verifyContracts(['test10', 'ERC20'], {wait: 10000})
   },
 
   'Test Github Import - raw URL': function (browser: NightwatchBrowser) {
@@ -61,7 +61,7 @@ module.exports = {
           .click('li[data-id="treeViewLitreeViewItembrowser/README.txt"')
           .addFile('Untitled7.sol', sources[6]['browser/Untitled7.sol'])
           .clickLaunchIcon('fileExplorers')
-          .verifyContracts(['test11', 'ERC20', 'SafeMath'], {wait: 10000})            
+          .verifyContracts(['test11', 'ERC20'], {wait: 10000})            
   },
   
   'Test switch to a github import from a solidity warning': function (browser: NightwatchBrowser) {
@@ -72,8 +72,8 @@ module.exports = {
           .addFile('Untitled8.sol', sources[7]['browser/Untitled8.sol'])
           .clickLaunchIcon('fileExplorers')
           .clickLaunchIcon('solidity')
-          .waitForElementPresent('[data-id="compiledErrors"] div:nth-child(4)')
-          .click('[data-id="compiledErrors"] div:nth-child(4)') // select the second warning which point to ERC20 code
+          .waitForElementPresent('[data-id="compiledErrors"] div:nth-child(3)', 45000)
+          .scrollAndClick('[data-id="compiledErrors"] div:nth-child(3)') // click on error which point to ERC20 code
           .pause(5000)
           .getEditorValue((content) => {
             browser.assert.ok(content.indexOf(`contract ERC20 is Context, IERC20`) != -1, 
